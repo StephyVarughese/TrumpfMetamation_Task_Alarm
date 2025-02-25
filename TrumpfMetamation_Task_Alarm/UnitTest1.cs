@@ -53,54 +53,18 @@ namespace TrumpfMetamation_Task_Alarm
             Assert.AreEqual(AlarmtimeLabel, inputTime);
 
 
-           
-
-
-            /*
-
             //Taking ScreenShot
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
             string filePath = @"C:\Users\jinog\OneDrive\Pictures\Screenshots\Screenshot (65)";
             screenshot.SaveAsFile(filePath);
             Console.WriteLine("Screenshot saved to: " + filePath);
 
-            IWebElement DeleteBtn = driver.FindElement(By.Id("remove"));
-            DeleteBtn.Click();
+           // IWebElement DeleteBtn = driver.FindElement(By.Id("remove"));
+           // DeleteBtn.Click();
 
             //Quit
            // driver.Close();
-            //Setting the Time using Input
 
-
-            /*
-            IWebElement minuteOption = driver.FindElement(By.XPath("//div[@class='minute']//button[text()='30']"));
-            minuteOption.Click();
-
-            IWebElement ampmOption = driver.FindElement(By.XPath("//div[@class='am/pm']//button[text()='PM']"));
-            ampmOption.Click();
-
-            //dropdown
-            IWebElement MusicDropdown = driver.FindElement(By.Id("SetMusic"));
-            SelectElement dropdown = new SelectElement(MusicDropdown);
-            dropdown.SelectByText("Option Text");
-            IWebElement selectedOption = dropdown.AllSelectedOptions[0];
-            Console.WriteLine("Selected Option: " + selectedOption.Text);
-
-            //Checkbox
-            IWebElement RepeatAlarmChkbox = driver.FindElement(By.Id("AlarmChk"));
-            RepeatAlarmChkbox.Click();
-            IWebElement SaveBtn = driver.FindElement(By.XPath("//button[text()='Save']"));
-            SaveBtn.Click();
-
-
-            //Using Assert we can able to Validate the Data
-
-
-            //Once Alarm Saved back to Alarm Title
-            //Delete the Alarm
-            IWebElement DeleteBtn = driver.FindElement(By.XPath("//button[text()='Delete']")); // here we can use following siblings or dynamic xpath
-            DeleteBtn.Click();
-*/
         }
 
     }
