@@ -18,29 +18,38 @@ namespace TrumpfMetamation_Task_Alarm
             IWebDriver driver = new ChromeDriver();
             //To open the Clock App
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            AppiumOptions options = new AppiumOptions();
-            options.AddAdditionalCapability("Clock", "ClockPath"); // Here we need to set the Clock App which is System App Clock
+            driver.Navigate().GoToUrl("https://os-clock.web.app/");
+            driver.Manage().Window.Maximize();
             //Navigating to Alarm
-            var alarmButton = driver.FindElement(By.Name("Alarm"));
+            IWebElement alarmButton = driver.FindElement(By.XPath("//div[@onClick='showAlarm()']"));
             alarmButton.Click();
             Console.WriteLine("Alarm section opened successfully.");
-            //
-            IWebElement AddBtn = driver.FindElement(By.XPath("//span[text()='Add']"));
-            AddBtn.Click();
-            IWebElement NewAlarmLbl = driver.FindElement(By.XPath("//span[text()='Add new alarm']"));
-            string alarmLabel = NewAlarmLbl.Text;
-            Assert.AreEqual("Add new alarm", alarmLabel); //To verify the Alarm label using Assertion
+          
+            IWebElement AddAlarmBtn = driver.FindElement(By.Id("addAlarm"));
+            AddAlarmBtn.Click();
+            IWebElement NewAlarmName = driver.FindElement(By.ClassName("alarmName"));
+            NewAlarmName.SendKeys("First alarm");        
+            IWebElement AlarmAccept = driver.FindElement(By.XPath("//div[text()='Accept']"));
+
+            IWebElement TimeOption = driver.FindElement(By.ClassName("alarmTime"));
+            TimeOption.SendKeys("10:30");
+          
 
             //Taking ScreenShot
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-            string filePath = @"C:\Users\jinog\OneDrive\Pictures\Screenshots\ClockImage";
+            string filePath = @"C:\Users\jinog\OneDrive\Pictures\Screenshots\Screenshot (65)";
             screenshot.SaveAsFile(filePath);
             Console.WriteLine("Screenshot saved to: " + filePath);
+
+            IWebElement DeleteBtn = driver.FindElement(By.Id("remove"));
+            DeleteBtn.Click();
+
+            //Quit
+            driver.Close();
             //Setting the Time using Input
 
-            IWebElement hourOption = driver.FindElement(By.XPath("//div[@class='hour']//button[text()='10']"));
-            hourOption.Click();
 
+            /*
             IWebElement minuteOption = driver.FindElement(By.XPath("//div[@class='minute']//button[text()='30']"));
             minuteOption.Click();
 
@@ -68,7 +77,7 @@ namespace TrumpfMetamation_Task_Alarm
             //Delete the Alarm
             IWebElement DeleteBtn = driver.FindElement(By.XPath("//button[text()='Delete']")); // here we can use following siblings or dynamic xpath
             DeleteBtn.Click();
-
+*/
         }
 
     }
