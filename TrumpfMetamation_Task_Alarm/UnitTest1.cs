@@ -2,6 +2,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System.Security.Cryptography.X509Certificates;
+using TrumpfMetamation_Task_Alarm.Method;
 
 namespace TrumpfMetamation_Task_Alarm
 {
@@ -15,6 +17,10 @@ namespace TrumpfMetamation_Task_Alarm
         [Test]
         public void TrumpfMetamation_Task_AlarmTest()
         {
+            var hours = 9;
+            var minutes = 59;
+            var inputTime = Methods.HoursMinute(hours, minutes);
+
             IWebDriver driver = new ChromeDriver();
             //To open the Clock App
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -29,11 +35,28 @@ namespace TrumpfMetamation_Task_Alarm
             AddAlarmBtn.Click();
             IWebElement NewAlarmName = driver.FindElement(By.ClassName("alarmName"));
             NewAlarmName.SendKeys("First alarm");        
-            IWebElement AlarmAccept = driver.FindElement(By.XPath("//div[text()='Accept']"));
-
+           
             IWebElement TimeOption = driver.FindElement(By.ClassName("alarmTime"));
-            TimeOption.SendKeys("10:30");
-          
+           
+           TimeOption.SendKeys(inputTime);
+
+            IWebElement AlarmAccept = driver.FindElement(By.XPath("//div[@onClick = 'submitAlarm(this)']"));
+            AlarmAccept.Click();
+              
+            IWebElement Accept = driver.FindElement(By.ClassName("printAlarmName"));
+            string AcceptAlarmNameLabel = Accept.Text;   
+            
+            IWebElement Time = driver.FindElement(By.ClassName("printAlarmTime"));
+            string AlarmtimeLabel = Time.Text;
+
+            Assert.AreEqual(AcceptAlarmNameLabel, "First alarm");
+            Assert.AreEqual(AlarmtimeLabel, inputTime);
+
+
+           
+
+
+            /*
 
             //Taking ScreenShot
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
@@ -45,7 +68,7 @@ namespace TrumpfMetamation_Task_Alarm
             DeleteBtn.Click();
 
             //Quit
-            driver.Close();
+           // driver.Close();
             //Setting the Time using Input
 
 
@@ -82,6 +105,7 @@ namespace TrumpfMetamation_Task_Alarm
 
     }
 
+    
 }
 
 
